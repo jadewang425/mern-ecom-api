@@ -1,22 +1,20 @@
 import express from 'express'
-import dotenv from "dotenv"
+import dotenv from 'dotenv'
 import mongoose from 'mongoose'
-import { currentDb } from './config/db.js'
+import db from './config/db.js'
+import authRoutes from './routes/auth.js'
 
 dotenv.config()
 
 const app = express()
 
 mongoose
-    .connect(currentDb)
+    .connect(db)
     .then(() => console.log('DB connected!'))
     .catch(err => console.log('DB ERROR =>', err))
 
-app.get('/', (req, res) => {
-    res.json({
-        data: "Jade JJ",
-    })
-})
+// register routes
+app.use('/api', authRoutes)
 
 const port = process.env.PORT || 8000
 

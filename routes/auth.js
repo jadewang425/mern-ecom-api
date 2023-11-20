@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/users', (req, res) => {
     res.json({
-        data: "Jade JJ",
+        data: "from auth routes",
     })
 })
 

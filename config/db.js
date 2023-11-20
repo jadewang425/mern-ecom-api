@@ -10,4 +10,6 @@ const database = {
 
 const localDb = process.env.TESTENV ? database.test : database.development
 
-export const currentDb = process.env.MONGODB_URI || localDb
+const currentDb = process.env.MONGODB_URI || localDb
+
+export default currentDb
