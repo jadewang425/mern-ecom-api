@@ -3,6 +3,7 @@ import User from '../models/user.js'
 import { hashPassword, comparePassword } from '../helper/auth.js'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import { requireToken } from '../helper/auth.js'
 
 dotenv.config()
 
@@ -84,6 +85,11 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         console.log(err)
     }
+})
+
+// testing requireToken
+router.get('/secret', requireToken, (req, res) => {
+    res.json({currentUser: req.user})
 })
 
 export default router
