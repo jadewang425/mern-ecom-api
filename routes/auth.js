@@ -48,4 +48,42 @@ router.post('/register', async (req, res) => {
     }
 })
 
+// POST / user login
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body
+        // if no name, email, or password
+        if (!email) {
+            return res.json({error: 'Email is required'})
+        }
+        if (!password || password.length < 6) {
+            return res.json({error: "Password is required and must be at least 6 characters long"})
+        }
+        // check if email already registered
+        const user = await User.findOne({email})
+        if (!user) {
+            return res.json({ error: "User not found"})
+        }
+        // hash password and save user
+        const match = await comparePassword(password, user.password)
+        if (!match) {
+            return res.json({error: "Wrong password"})
+        }
+        // create signed jwt
+        const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: "7d"})
+        // send response
+        res.json({
+            user: {
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                address: user.address,
+            },
+            token,
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 export default router
