@@ -3,7 +3,7 @@ import User from '../models/user.js'
 import { hashPassword, comparePassword } from '../helper/auth.js'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { requireToken } from '../helper/auth.js'
+import { requireToken, isAdmin } from '../helper/auth.js'
 
 dotenv.config()
 
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
 })
 
 // testing requireToken
-router.get('/secret', requireToken, (req, res) => {
+router.get('/secret', requireToken, isAdmin, (req, res) => {
     res.json({currentUser: req.user})
 })
 
