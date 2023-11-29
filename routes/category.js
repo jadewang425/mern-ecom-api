@@ -45,7 +45,8 @@ router.put('/category/:categoryId', requireToken, isAdmin, async (req, res) => {
 // DELETE / delete
 router.delete('/category/:categoryId', requireToken, isAdmin, async (req, res) => {
     try {
-        //
+        const removed = await Category.findByIdAndDelete(req.params.categoryId)
+        res.json(removed)
     } catch (err) {
         console.log(err)
         return res.status(400).json(err.message)
@@ -54,7 +55,8 @@ router.delete('/category/:categoryId', requireToken, isAdmin, async (req, res) =
 // GET / index - show list of categories
 router.get('/categories', async (req, res) => {
     try {
-        //
+        const all = await Category.find({})
+        res.json(all)
     } catch (err) {
         console.log(err)
         return res.status(400).json(err.message)
