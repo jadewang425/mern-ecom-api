@@ -87,6 +87,13 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.get('/auth-check', requireToken, (req, res) => {
+    res.json({ok: true})
+})
+router.get('/admin-check', requireToken, isAdmin, (req, res) => {
+    res.json({ok: true})
+})
+
 // testing requireToken
 router.get('/secret', requireToken, isAdmin, (req, res) => {
     res.json({currentUser: req.user})

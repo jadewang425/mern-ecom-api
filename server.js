@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import cors from 'cors'
 
 import db from './config/db.js'
 
@@ -18,6 +19,8 @@ mongoose
     .then(() => console.log('DB connected!'))
     .catch(err => console.log('DB ERROR =>', err))
 
+// middlewares
+app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 
