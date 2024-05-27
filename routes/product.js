@@ -55,17 +55,17 @@ router.put('/product/:productId', requireToken, isAdmin, formidable(), async (re
         // validation
         switch(true) {
             case !name.trim():
-                res.json({ error: 'Name is required'})
+                return res.json({ error: 'Name is required'})
             case !description.trim():
-                res.json({ error: 'Description is required'})
+                return res.json({ error: 'Description is required'})
             case !price.trim():
-                res.json({ error: 'Price is required'})
+                return res.json({ error: 'Price is required'})
             case !category.trim():
-                res.json({ error: 'Category is required'})
+                return res.json({ error: 'Category is required'})
             case !shipping.trim():
-                res.json({ error: 'Shipping is required'})
+                return res.json({ error: 'Shipping is required'})
             case photo && photo.size > 1000000:
-                res.json({ error: 'Photo must be less than 1mb in size'})
+                return res.json({ error: 'Photo must be less than 1mb in size'})
         }
 
         // update product
