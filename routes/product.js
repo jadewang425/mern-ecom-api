@@ -151,4 +151,30 @@ router.post('/filtered-products', async (req, res) => {
     }
 })
 
+router.get('/products-count', async (req, res) => {
+    try {
+        const total = await Product.find({}).estimatedDocumentCount()
+        res.json(total)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+router.get('/list-products/:page', async (req, res) => {
+    try {
+        const perPage = 6
+        const page = req.params.page ? req.params.page : 1
+
+        const products = await Product.find({})
+            .select('-photo')
+            .skip((page) - 1 * perPage)
+            .limit(6)
+            .sort({ createdAt: -1 })
+            
+        res.json(products)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 export default router
