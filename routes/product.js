@@ -167,8 +167,8 @@ router.get('/list-products/:page', async (req, res) => {
 
         const products = await Product.find({})
             .select('-photo')
-            .skip((page) - 1 * perPage)
-            .limit(6)
+            .skip((page - 1) * perPage)
+            .limit(perPage)
             .sort({ createdAt: -1 })
             
         res.json(products)
